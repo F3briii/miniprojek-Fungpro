@@ -49,18 +49,18 @@ Input:
   Stok           : 15
   Stok minimum   : 20
 
-Output:
-  === HASIL DATA STOK ===
-  Nama       : Beras
-  Stok       : 100
-  Harga/kg   : Rp10000
-  Nilai stok : Rp1000000
+Output:  
+=== HASIL DATA STOK ===  
+  Nama       : Beras  
+  Stok       : 100  
+  Harga/kg   : Rp10000  
+  Nilai stok : Rp1000000  
   Status     : Stok Aman
-  ----------------------
-  Nama       : Minyak Goreng
-  Stok       : 15
-  Harga/kg   : Rp15000
-  Nilai stok : Rp225000
+  ----------------------  
+  Nama       : Minyak Goreng  
+  Stok       : 15  
+  Harga/kg   : Rp15000  
+  Nilai stok : Rp225000  
   Status     : Stok Menipis
   ----------------------
   Total seluruh stok: 115
