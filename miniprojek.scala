@@ -2,15 +2,15 @@ import scala.io.StdIn.readLine
 import scala.annotation.tailrec
 
 // Function value dan lambda
-val hitungNilaiStok: (Int, Int) => Long =
-  (harga, stok) => harga.toLong * stok
+val hitungNilaiStok: ((String, Int, Int, Int)) => Long =
+  komoditas => komoditas._2.toLong * komoditas._3
 
 val formatRupiah: Long => String =
   nilai => s"Rp$nilai"
 
 // Function composition menggunakan andThen
-val hitungDanFormat: (Int, Int) => String =
-  Function.untupled(hitungNilaiStok.tupled.andThen(formatRupiah))
+val hitungDanFormat: ((String, Int, Int, Int)) => String =
+  hitungNilaiStok.andThen(formatRupiah)
 
 // Pure function dan conditional expression
 def cekStatus(stok: Int, minimum: Int): String =
@@ -65,7 +65,7 @@ def lihatStok(
     println(s"Nama       : ${data._1}")
     println(s"Stok       : ${data._3}")
     println(s"Harga/kg   : Rp${data._2}")
-    println(s"Nilai stok : ${hitungDanFormat(data._2, data._3)}")
+    println(s"Nilai stok : ${hitungDanFormat(data)}")
     println(s"Status     : ${cekStatus(data._3, data._4)}")
     println("----------------------")
   }
