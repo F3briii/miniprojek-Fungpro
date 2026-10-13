@@ -1,5 +1,4 @@
 import scala.io.StdIn.readLine
-import scala.annotation.tailrec
 
 // Function value dan lambda
 val hitungNilaiStok: ((String, Int, Int, Int)) => Long =
@@ -8,9 +7,9 @@ val hitungNilaiStok: ((String, Int, Int, Int)) => Long =
 val formatRupiah: Long => String =
   nilai => s"Rp$nilai"
 
-// Function composition menggunakan andThen
+// Function composition menggunakan compose
 val hitungDanFormat: ((String, Int, Int, Int)) => String =
-  hitungNilaiStok.andThen(formatRupiah)
+  formatRupiah.compose(hitungNilaiStok)
 
 // Pure function dan conditional expression
 def cekStatus(stok: Int, minimum: Int): String =
@@ -21,7 +20,6 @@ def cekStatus(stok: Int, minimum: Int): String =
 def bacaInput(): String =
   Option(readLine()).getOrElse("").trim
 
-@tailrec
 def bacaTeks(pesan: String): String =
   print(pesan)
   val teks = bacaInput()
@@ -30,7 +28,6 @@ def bacaTeks(pesan: String): String =
     println("Input tidak boleh kosong.")
     bacaTeks(pesan)
 
-@tailrec
 def bacaAngka(pesan: String, minimum: Int): Int =
   print(pesan)
   bacaInput().toIntOption match
@@ -47,14 +44,14 @@ def bacaKomoditas(urutan: Int): (String, Int, Int, Int) =
   val minimum = bacaAngka("Stok minimum   : ", 0)
   (nama, harga, stok, minimum)
 
-@tailrec
 def bacaSemua(
   urutan: Int,
-  jumlah: Int,
-  hasil: List[(String, Int, Int, Int)] = Nil
+  jumlah: Int
 ): List[(String, Int, Int, Int)] =
-  if urutan > jumlah then hasil.reverse
-  else bacaSemua(urutan + 1, jumlah, bacaKomoditas(urutan) :: hasil)
+  if urutan > jumlah then Nil
+  else
+    val komoditas = bacaKomoditas(urutan)
+    komoditas :: bacaSemua(urutan + 1, jumlah)
 
 def lihatStok(
   daftar: List[(String, Int, Int, Int)]
@@ -71,15 +68,13 @@ def lihatStok(
   }
 
 // Recursive method dengan base case dan recursive case
-@tailrec
 def totalStok(
-  daftar: List[(String, Int, Int, Int)],
-  total: Int = 0
+  daftar: List[(String, Int, Int, Int)]
 ): Int =
   daftar match
-    case Nil => total
+    case Nil => 0
     case kepala :: ekor =>
-      totalStok(ekor, total + kepala._3)
+      kepala._3 + totalStok(ekor)
 
 @main def main(): Unit =
   val jumlah = bacaAngka("Jumlah komoditas yang diinput: ", 1)
