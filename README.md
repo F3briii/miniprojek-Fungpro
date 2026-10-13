@@ -65,6 +65,9 @@ Output:
   ----------------------
   Total seluruh stok: 115
 
+| Flowchart |
+|---------|
+| ![Flowchart Preview](StokTani.png)
 
 FITUR
 -----
